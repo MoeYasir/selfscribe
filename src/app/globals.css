@@ -1,26 +1,75 @@
 @import "tailwindcss";
 
+/* ── Class-based dark mode ─────────────────────────────────────────────────── */
+@variant dark (&:where(.dark, .dark *));
+
+/* ── Semantic colour tokens ─────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light theme (default) */
+  --app-bg:             #f5f5f0;
+  --app-surface:        #eeede8;
+  --app-ink:            #1a1a18;
+  --app-prose:          rgba(26, 26, 24, 0.75);
+  --app-secondary:      #6b6a65;
+  --app-muted:          rgba(26, 26, 24, 0.45);
+  --app-ghost:          rgba(26, 26, 24, 0.28);
+  --app-border:         rgba(26, 26, 24, 0.12);
+  --app-border-subtle:  rgba(26, 26, 24, 0.08);
+  --app-overlay:        rgba(26, 26, 24, 0.04);
+  --app-today-bg:       #1a1a18;
+  --app-today-text:     #f5f5f0;
 }
 
+.dark {
+  /* Dark theme */
+  --app-bg:             #0e0e0e;
+  --app-surface:        #161616;
+  --app-ink:            rgba(255, 255, 255, 0.80);
+  --app-prose:          rgba(255, 255, 255, 0.60);
+  --app-secondary:      rgba(255, 255, 255, 0.45);
+  --app-muted:          rgba(255, 255, 255, 0.25);
+  --app-ghost:          rgba(255, 255, 255, 0.15);
+  --app-border:         rgba(255, 255, 255, 0.05);
+  --app-border-subtle:  rgba(255, 255, 255, 0.08);
+  --app-overlay:        rgba(255, 255, 255, 0.04);
+  --app-today-bg:       #ffffff;
+  --app-today-text:     #0e0e0e;
+}
+
+/* ── Register tokens with Tailwind ─────────────────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-app-bg:             var(--app-bg);
+  --color-app-surface:        var(--app-surface);
+  --color-app-ink:            var(--app-ink);
+  --color-app-prose:          var(--app-prose);
+  --color-app-secondary:      var(--app-secondary);
+  --color-app-muted:          var(--app-muted);
+  --color-app-ghost:          var(--app-ghost);
+  --color-app-border:         var(--app-border);
+  --color-app-border-subtle:  var(--app-border-subtle);
+  --color-app-overlay:        var(--app-overlay);
+  --color-app-today-bg:       var(--app-today-bg);
+  --color-app-today-text:     var(--app-today-text);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ── Custom scrollbars ───────────────────────────────────────────────────────── */
+* { scrollbar-width: thin; scrollbar-color: var(--app-border) transparent; }
+::-webkit-scrollbar { width: 2px; height: 2px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--app-border); border-radius: 99px; }
 
+/* ── Page fade-in ────────────────────────────────────────────────────────────── */
+@keyframes page-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.page-fade { animation: page-fade-in 150ms ease-out both; }
+
+/* ── Body ───────────────────────────────────────────────────────────────────── */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--app-bg);
+  color: var(--app-ink);
+  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
 }
